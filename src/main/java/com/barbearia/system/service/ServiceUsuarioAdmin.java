@@ -154,7 +154,8 @@ public class ServiceUsuarioAdmin {
         if (usuarioAdmin == null) {
             return;
         }
-        String token = jwtService.generateToken(email);
+        // String token = jwtService.generateToken(email);
+        String token = String.format("%06d", (int) (Math.random() * 1000000));
 
         usuarioAdmin.setResetToken(token);
         usuarioAdmin.setResetTokenExpires(LocalDateTime.now().plusMinutes(15));
