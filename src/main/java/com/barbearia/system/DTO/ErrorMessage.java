@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class ErrorMessage {
 
-    int status;
-    String message;
-    LocalDateTime timestamp;
+    private int status;
+    private String message;
+    private LocalDateTime timestamp;
 
     public ErrorMessage(int status, String message, LocalDateTime timestamp) {
         this.status = status;
