@@ -15,7 +15,6 @@ public class EmailService {
     public void sendRecoveryEmail(String to, String token) {
 
         try {
-            // String link = "http://localhost:8080/application/json/reset-password?token=" + token;
 
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
