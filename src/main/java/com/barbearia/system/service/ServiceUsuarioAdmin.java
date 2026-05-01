@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.barbearia.system.exception.MyRuntimeException;
 import com.barbearia.system.model.UsuarioAdmin;
 import com.barbearia.system.repository.RepositoryUsuarioAdmin;
 import com.barbearia.system.security.JwtService;
@@ -183,11 +184,11 @@ public class ServiceUsuarioAdmin {
 
         // 🔐 IMPORTANTE: não revelar se token é válido
         UsuarioAdmin usuarioAdmin = usuarioAdminRepository.findByResetToken(token)
-                .orElseThrow(() -> new RuntimeException("Token inválido"));
+                .orElseThrow(() -> new MyRuntimeException("Token inválido"));
 
         // ⏰ verificar expiração
         if (usuarioAdmin.getResetTokenExpires().isBefore(LocalDateTime.now())) {
-            throw new RuntimeException("Token expirado");
+            throw new MyRuntimeException("Token expirado - solicite um novo token");
         }
 
         // 🔐 hash da senha

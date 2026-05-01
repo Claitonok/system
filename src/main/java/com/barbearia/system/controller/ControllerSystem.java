@@ -42,7 +42,15 @@ public class ControllerSystem {
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/admin/create")
+    public ResponseEntity<UsuarioAdmin> saveUsuarioAdmin(@RequestBody UsuarioAdmin usuarioAdmin) {
+
+        UsuarioAdmin savedUsuarioAdmin = authService.saveUsuarioAdmin(usuarioAdmin);
+
+        return new ResponseEntity<>(savedUsuarioAdmin, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
 
         try {
@@ -60,7 +68,7 @@ public class ControllerSystem {
 
     }
 
-    @PostMapping("/login")
+    @PostMapping("/admin/login")
     public ResponseEntity<?> login(@RequestBody UsuarioAdmin usuarioAdmin) {
 
         String token = authService.loginService(usuarioAdmin.getEmail(), usuarioAdmin.getSenha());
@@ -76,7 +84,7 @@ public class ControllerSystem {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/forgot-password")
+    @PostMapping("/admin/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequestDTO request) {
 
         UsuarioAdmin usuarioAdmin = authService.findByEmailService(request.getEmail());
@@ -88,7 +96,7 @@ public class ControllerSystem {
         return ResponseEntity.status(404).body("Email não encontrado");
     }
 
-    @PostMapping("/reset-password")
+    @PostMapping("/admin/reset-password")
     public ResponseEntity<?> reset(@RequestBody UsuarioAdmin usuarioAdmin) {
 
         authService.resetPassword(
