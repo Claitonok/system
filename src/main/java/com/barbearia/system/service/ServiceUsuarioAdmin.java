@@ -177,7 +177,7 @@ public class ServiceUsuarioAdmin {
             System.out.println("\nERRO AO ENVIAR PARA RABBIT: " + e.getMessage() + "\n");
             e.printStackTrace();
         }
-        // emailProducer.send(usuarioAdmin.getEmail(), token);
+   
     }
 
     public void resetPassword(String token, String novaSenha) {
