@@ -76,10 +76,12 @@ public class ControllerSystem {
         if (token == null) {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
-        
+
+        UsuarioAdmin usuarioAdminInfo = authService.findByEmailService(usuarioAdmin.getEmail());
+
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);
-        response.put("usuarioAdmin", usuarioAdmin);
+        response.put("usuarioAdmin", usuarioAdminInfo);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

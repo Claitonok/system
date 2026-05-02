@@ -105,19 +105,21 @@ public class ServiceUsuarioAdmin {
      * @return
      */
     public String loginService(String email, String senha) {
-
-        UsuarioAdmin usuarioAdmin = usuarioAdminRepository.findByEmailAndSenha(email, senha).orElse(null);
-
-        // 🔐 hash da senha
-        // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String senhaHash = encoder.encode(senha);
-
+        
+        System.out.println("Senha fornecida: " + senha + "\n");
+        
+        UsuarioAdmin usuarioAdmin = usuarioAdminRepository.findByEmail(email).orElse(null);
+    
         if (usuarioAdmin == null) {
             System.out.println("Usuario não Cadastrado");
             return null;
         }
 
-        if (!usuarioAdmin.getSenha().equals(senhaHash)) {
+        System.out.println("Senha hash: " + usuarioAdmin.getSenha());
+        // 🔐 comparar senhas
+        boolean asSenhasSaoIguais = encoder.matches(senha, usuarioAdmin.getSenha());
+
+        if (!asSenhasSaoIguais) {
             System.out.println("Senha incorreta");
             return null;
         }
