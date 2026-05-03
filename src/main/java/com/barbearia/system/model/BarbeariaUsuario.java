@@ -29,7 +29,7 @@ public class BarbeariaUsuario {
     private int valor;
 
     @Column(name = "data_agendamento", nullable = false)
-    private LocalDateTime dataAgendamento;
+    private String dataAgendamento;
 
 
 }
