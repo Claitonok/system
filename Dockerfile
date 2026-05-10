@@ -27,28 +27,25 @@
 
 # ENTRYPOINT ["java","-jar","system.jar"]
 
+#Deploy
 
-# Etapa 1 — Build
-FROM maven:3.9-eclipse-temurin-21 AS build
-
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copia o pom.xml e as dependências primeiro (otimiza cache)
+# Primeiro copia apenas o pom.xml para baixar as dependências (faz cache)
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
-# COPIA A PASTA SRC (Onde está o código e os recursos)
-COPY src ./src;
+# AGORA copia a pasta src inteira para dentro do container
+COPY src ./src
 
-# Executa o build
+# Build do projeto
 RUN mvn clean package -DskipTests
 
-# # DEBUG (mostra se o jar existe)
-RUN ls -la /app/target
-
-# # Etapa 2 — Runtime | Estágio de Execução
-FROM eclipse-temurin:21-jre-alpine
+# Estágio final (Execução)
+FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar;
+COPY --from=build /app/target/*.jar app.jar
+
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
