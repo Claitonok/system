@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.barbearia.system.exception.MyRuntimeException;
@@ -17,7 +16,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
     private RepositoryUsuarioApiSecurity repositoryUsuariopiSecurity;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws MyRuntimeException {
@@ -32,11 +30,6 @@ public class MyUserDetailsService implements UserDetailsService {
             System.out.println("Usuário encontrado: " + usuarioApiSecurity.getUsername());
             System.out.println("Senha: " + usuarioApiSecurity.getPassword());
             System.out.println("Roles do usuário: " + usuarioApiSecurity.getRoles());
-            // System.out.println("\n======\n");
-            // System.out.println(new BCryptPasswordEncoder().encode("0147"));
-            // System.out.println("\n======\n");
-            // System.out.println("Comparação de senhas: " + new BCryptPasswordEncoder().matches("0147", usuarioApiSecurity.getPassword()));
-            // System.out.println("\n======\n");
 
            // Constrói um UserDetails usando os dados do usuário encontrado
             return User.builder()

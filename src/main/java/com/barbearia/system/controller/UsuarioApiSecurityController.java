@@ -16,11 +16,8 @@ public class UsuarioApiSecurityController {
 
     @PostMapping("/setup-user")
     public ResponseEntity<UsuarioApiSecurity> criarUsuarioAcesso(@RequestBody UsuarioApiSecurity usuario) {
-        try {
-            UsuarioApiSecurity novoUsuario = service.criarUsuario(usuario);
-            return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+      
+        UsuarioApiSecurity novoUsuario = service.criarUsuario(usuario);
+        return new ResponseEntity<>(novoUsuario, HttpStatus.CREATED);
     }
 }
