@@ -1,29 +1,41 @@
-# Getting Started
+# 💈 System Barbearia API
 
-### Reference Documentation
-For further reference, please consider the following sections:
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-21-orange)](https://www.oracle.com/java/technologies/downloads/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-latest-blue)](https://www.postgresql.org/)
+[![Railway](https://img.shields.io/badge/Deploy-Railway-black)](https://railway.app/)
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/4.0.5/maven-plugin)
-* [Create an OCI image](https://docs.spring.io/spring-boot/4.0.5/maven-plugin/build-image.html)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/4.0.5/reference/using/devtools.html)
-* [Spring Web](https://docs.spring.io/spring-boot/4.0.5/reference/web/servlet.html)
-* [Spring Data JDBC](https://docs.spring.io/spring-boot/4.0.5/reference/data/sql.html#data.sql.jdbc)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/4.0.5/reference/data/sql.html#data.sql.jpa-and-spring-data)
+API robusta desenvolvida para gestão de barbearias, focada em segurança, escalabilidade e comunicação assíncrona. O sistema gerencia agendamentos e autenticação de usuários, servindo como backend para aplicações web modernas.
 
-### Guides
-The following guides illustrate how to use some features concretely:
+## 🚀 Tecnologias e Infraestrutura
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Using Spring Data JDBC](https://github.com/spring-projects/spring-data-examples/tree/main/jdbc/basics)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
+*   **Linguagem:** Java 21 (v21.0.11) com Spring Boot 3.
+*   **Banco de Dados:** PostgreSQL (Hospedado no Railway).
+*   **Mensageria:** RabbitMQ para processamento de filas e eventos.
+*   **Segurança:** Spring Security com `BCryptPasswordEncoder` para proteção de credenciais.
+*   **Frontend:** Next.js/React hospedado na Vercel.
 
-### Maven Parent overrides
+## 🛠️ Arquitetura de Segurança
 
-Due to Maven's design, elements are inherited from the parent POM to the project POM.
-While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the parent.
-To prevent this, the project POM contains empty overrides for these elements.
-If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
+A aplicação implementa um fluxo de autenticação personalizado via `MyUserDetailsService`:
 
+1.  **Criptografia:** Senhas nunca são salvas em texto puro, utilizando hash BCrypt.
+2.  **Controle de Acesso:** Endpoints protegidos por Roles (`ADMIN`, `USER`) via `SecurityFilterChain`.
+3.  **Sessão:** Gerenciamento de sessão limitado para garantir a integridade dos acessos.
+
+## 📦 Como Executar o Projeto
+
+### Pré-requisitos
+* JDK 21
+* Maven 3.x
+* Instâncias de PostgreSQL e RabbitMQ (Docker ou Cloud)
+
+### Variáveis de Ambiente Necessárias
+Configure as seguintes variáveis no seu ambiente de deploy (Railway) ou no `application.properties`:
+
+## 🌐 Deploy e CI/CD
+Backend (Railway): Atualização automática via GitHub Integration. O sistema utiliza Docker para orquestrar o Java 21 e as dependências de banco e mensageria.
+
+Frontend (Vercel): Consome a API utilizando renderização dinâmica (force-dynamic) para garantir dados em tempo real.
+
+**Desenvolvido por Claiton 🚀
